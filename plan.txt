@@ -6,7 +6,8 @@ add manually. CRUD stuff catalogue esque card view with search?
 
 buolk import option:
 EXTERNAL API:
-get the users (using steam user id) steam user games and add to db.
+get the users (using steam user id) steam user games and add to db.\
+https://developer.valvesoftware.com/wiki/Steam_Web_API#GetOwnedGames_(v0001)
 
 Each game will have:
 text area for notes
