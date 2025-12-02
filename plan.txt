@@ -25,16 +25,11 @@ cover_image_path
 Notes
 note_id
 note_content
+    game_id
 
 
 Images
 image_id
-image_path
-
-GameNote
-    game_id
+image_name
     note_id
 
-NoteImages
-    note_id
-    image_id

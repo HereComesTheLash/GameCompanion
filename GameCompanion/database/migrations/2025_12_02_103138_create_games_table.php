@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->string('game_name');
+            $table->text('game_description')->nullable();
+            $table->string('cover_image_path')->nullable();
             $table->timestamps();
         });
     }
