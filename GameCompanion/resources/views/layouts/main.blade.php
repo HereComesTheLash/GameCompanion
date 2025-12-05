@@ -31,7 +31,7 @@
             <!-- /.navbar-header -->
             <div class="collapse navbar-collapse" id="navbar-toggler">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="#" class="nav-link">Games</a></li>
+                    <li class="nav-item"><a href="{{ route('games.index') }}" class="nav-link">Games</a></li>
                     {{-- <li class="nav-item active"><a href="{{ route('contacts.index') }}" class="nav-link">Contacts</a></li> --}}
                 </ul>
             </div>

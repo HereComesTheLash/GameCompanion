@@ -14,4 +14,8 @@ use App\Http\Controllers\GamesController;
 |
 */
 
-Route::get('/', [GamesController::class, 'index']);
+Route::get('/', function() { return View('index'); });
+
+Route::get('/games', [GamesController::class, 'index'])->name('games.index');
+
+Route::get('/games/add', [GamesController::class, 'add'])->name('games.add');

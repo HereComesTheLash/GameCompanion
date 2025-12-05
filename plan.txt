@@ -33,3 +33,9 @@ image_id
 image_name
     note_id
 
+
+
+create database game_companion_db;
+create user 'game_companion_user'@'%' identified by 'password';
+grant all on game_companion_db.* to 'game_companion_user'@'%';
+flush privileges;
