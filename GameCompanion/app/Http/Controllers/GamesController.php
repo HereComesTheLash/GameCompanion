@@ -9,4 +9,9 @@ class GamesController extends Controller
     {
         return view('games.index');
     }
+
+    public function add()
+    {
+        return view('games.add');
+    }
 }
