@@ -14,4 +14,10 @@ class GamesController extends Controller
     {
         return view('games.add');
     }
+
+    public function store()
+    {
+        // Logic to store game data goes here
+        return response()->json(['message' => 'Game stored successfully']);
+    }
 }

@@ -19,3 +19,7 @@ Route::get('/', function() { return View('index'); });
 Route::get('/games', [GamesController::class, 'index'])->name('games.index');
 
 Route::get('/games/add', [GamesController::class, 'add'])->name('games.add');
+
+Route::post('/games/store', [GamesController::class, 'store'])->name('games.store');
+
+Route::post('/games/steam/import', [GamesController::class, 'steamImport'])->name('games.steam.import');
