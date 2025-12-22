@@ -19,17 +19,12 @@ class GamesController extends Controller
 
     public function store(Request $request)
     {
-
-    //         protected $fillable = [
-    //     'game_name',
-    //     'game_description',
-    //     'cover_image_path',
-    // ];
-
         $validatedData = $request->validate([
             'game_name' => 'required|max:255',
             'game_description' => 'required',
             'cover_image_path' => 'nullable|image|max:2048',
         ]);
+
+        Game::create($validatedData);
     }
 }
