@@ -13,6 +13,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <form method="POST" action="{{ route('games.store') }}" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="form-group row">
                                             <label for="game_name" class="col-md-3 col-form-label">Game Name</label>
                                             <div class="col-md-9">
@@ -24,7 +25,8 @@
                                             <label for="game_description"
                                                 class="col-md-3 col-form-label">Description</label>
                                             <div class="col-md-9">
-                                                <textarea name="game_description" id="game_description" rows="4" class="form-control"></textarea>
+                                                <textarea name="game_description" id="game_description" rows="4"
+                                                    class="form-control"></textarea>
                                             </div>
                                         </div>
 
@@ -40,7 +42,8 @@
                                         <div class="form-group row mb-0">
                                             <div class="col-md-9 offset-md-3">
                                                 <button type="submit" class="btn btn-primary">Save</button>
-                                                <a href="{{ route('games.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                                                <a href="{{ route('games.index') }}"
+                                                    class="btn btn-outline-secondary">Cancel</a>
                                             </div>
                                         </div>
                                     </form>
@@ -52,7 +55,8 @@
                                         <div class="form-group row mt-3">
                                             <label for="steam_user_id" class="col-md-3 col-form-label">Steam User ID</label>
                                             <div class="col-md-6">
-                                                <input type="text" name="steam_user_id" id="steam_user_id" class="form-control" placeholder="Enter Steam User ID">
+                                                <input type="text" name="steam_user_id" id="steam_user_id"
+                                                    class="form-control" placeholder="Enter Steam User ID">
                                             </div>
                                             <div class="col-md-3">
                                                 <button type="submit" class="btn btn-secondary w-100">Load Games</button>

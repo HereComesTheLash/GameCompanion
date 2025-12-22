@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Game;
+use Illuminate\Http\Request;
 
 
 class GamesController extends Controller
@@ -15,9 +17,19 @@ class GamesController extends Controller
         return view('games.add');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        // Logic to store game data goes here
-        return response()->json(['message' => 'Game stored successfully']);
+
+    //         protected $fillable = [
+    //     'game_name',
+    //     'game_description',
+    //     'cover_image_path',
+    // ];
+
+        $validatedData = $request->validate([
+            'game_name' => 'required|max:255',
+            'game_description' => 'required',
+            'cover_image_path' => 'nullable|image|max:2048',
+        ]);
     }
 }

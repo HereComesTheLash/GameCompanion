@@ -8,7 +8,6 @@
         $json = file_get_contents($api);
         $data = json_decode($json, true);
         $games = $data['response']['games'];
-        // Loop over eac game array
         foreach ($games as $game) {
             echo 'Game Name: ' . $game['name'] . '<br>';
             echo 'App ID: ' . $game['appid'] . '<br>';
