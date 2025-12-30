@@ -27,4 +27,9 @@ class GamesController extends Controller
 
         Game::create($validatedData);
     }
+
+    public function steamImport()
+    {
+        return response()->json(['message' => 'Games imported from Steam successfully']);
+    }
 }

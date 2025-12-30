@@ -21,41 +21,12 @@
                             @endif
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form method="POST" action="{{ route('games.store') }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group row">
-                                            <label for="game_name" class="col-md-3 col-form-label">Game Name</label>
-                                            <div class="col-md-9">
-                                                <input type="text" name="game_name" id="game_name" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label for="game_description"
-                                                class="col-md-3 col-form-label">Description</label>
-                                            <div class="col-md-9">
-                                                <textarea name="game_description" id="game_description" rows="4"
-                                                    class="form-control"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label for="cover_image_file" class="col-md-3 col-form-label">Cover Image
-                                                File</label>
-                                            <div class="col-md-9">
-                                                <input type="file" name="cover_image_file" id="cover_image_file"
-                                                    class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-0">
-                                            <div class="col-md-9 offset-md-3">
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                                <a href="{{ route('games.index') }}"
-                                                    class="btn btn-outline-secondary">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    @include('games.partials.form', [
+                                        'formAction' => route('games.store'),
+                                        'formMethod' => 'POST',
+                                        'submitLabel' => 'Save',
+                                        'game' => null,
+                                    ])
 
                                     <hr>
 
