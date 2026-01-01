@@ -22,10 +22,16 @@ class GamesController extends Controller
         $validatedData = $request->validate([
             'game_name' => 'required|max:255',
             'game_description' => 'required',
-            'cover_image_path' => 'nullable|image|max:2048',
         ]);
 
+        $image = $request->file('cover_image_file');
+        if ($image) {
+            $imagePath = $image->store('cover_images', 'public');
+            $validatedData['cover_image_path'] = $imagePath;
+        }
         Game::create($validatedData);
+
+        return redirect()->route('games.index')->with('status', 'Game saved successfully.');
     }
 
     public function steamImport()

@@ -1,6 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
+    <h1>Steam Games</h1>
+
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     @php
         $key = $_ENV['STEAM_API_KEY'];
 
