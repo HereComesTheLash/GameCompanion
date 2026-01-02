@@ -1,7 +1,23 @@
 @extends('layouts.main')
 
 @section('content')
-    <h1>Steam Games</h1>
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+        <div>
+            <h1 class="mb-1">Steam Games Catalogue</h1>
+            <p class="text-muted mb-0">Browse and manage your library at a glance.</p>
+        </div>
+        @if ($games->count())
+            <form method="GET" action="{{ url()->current() }}" class="form-inline">
+                <label for="sort" class="mr-2 text-muted">Sort by</label>
+                <select id="sort" name="sort" class="form-control" onchange="this.form.submit()">
+                    <option value="" {{ !request()->filled('sort') ? 'selected' : '' }}>Default</option>
+                    <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name (A–Z)</option>
+                    <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>Name (Z–A)</option>
+                    <option value="recent" {{ request('sort') === 'recent' ? 'selected' : '' }}>Recently Added</option>
+                </select>
+            </form>
+        @endif
+    </div>
 
     @if (session('status'))
         <div class="alert alert-success">
@@ -9,38 +25,30 @@
         </div>
     @endif
 
-    <div class="row">
-        @if ($games->count())
-            @foreach ($games as $game)
-                <div class="col-md-4 mb-4">
-                    <div class="card w-50">
-                        <img class="card-img-top" src="{{ asset('storage/' . $game->cover_image_path) }}"
-                            alt="{{ $game->game_name }}">
-                        <div class="card-body">
-                            <h5>{{ $game->game_name }}</h5>
-                            <p class="card-text text-muted">
-                                {{ $game->game_description, 140 }}
-                            </p>
+    @if ($games->count())
+        <div class="catalogue-wrapper p-3 bg-light rounded">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                @foreach ($games as $game)
+                    <div class="col d-flex justify-content-center">
+                        <div class="card w-50">
+                            <img class="card-img-top" src="{{ asset('storage/' . ($game->cover_image_path ?? '')) }}"
+                                alt="{{ $game->game_name }}">
+                            <div class="card-body">
+                                <h5>{{ $game->game_name }}</h5>
+                                <p class="card-text text-muted">
+                                    {{ $game->game_description, 140 }}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="" class="btn btn-primary">View Note</a>
+                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-primary">Edit Details</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        @else
-            <h1 class="text-muted ml-3">No games yet. <a href="{{ route('games.add') }}">Add one.</a></h1>
-        @endif
-    </div>
-
-    @php
-        $key = $_ENV['STEAM_API_KEY'];
-
-        $api = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$key}&steamid=76561198864447681&format=json&include_appinfo=true&include_played_free_games=true";
-        $json = file_get_contents($api);
-        $data = json_decode($json, true);
-        $games = $data['response']['games'];
-        foreach ($games as $game) {
-            echo 'Game Name: ' . $game['name'] . ', ';
-            echo 'App ID: ' . $game['appid'] . ', ';
-            echo 'Playtime (hours): ' . round($game['playtime_forever'] / 60, 2) . '<br>';
-        }
-    @endphp
+                @endforeach
+            </div>
+        </div>
+    @else
+        <h1 class="text-muted ml-3">No games yet. <a href="{{ route('games.add') }}">Add one.</a></h1>
+    @endif
 @endsection

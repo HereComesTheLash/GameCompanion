@@ -18,6 +18,12 @@ class GamesController extends Controller
         return view('games.add');
     }
 
+    public function edit($id)
+    {
+        $game = Game::findOrFail($id);
+        return view('games.edit', compact('game'));
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -33,6 +39,26 @@ class GamesController extends Controller
         Game::create($validatedData);
 
         return redirect()->route('games.index')->with('status', 'Game saved successfully.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'game_name' => 'required|max:255',
+            'game_description' => 'required',
+        ]);
+
+        $game = Game::findOrFail($id);
+
+        $image = $request->file('cover_image_file');
+        if ($image) {
+            $imagePath = $image->store('cover_images', 'public');
+            $validatedData['cover_image_path'] = $imagePath;
+        }
+
+        $game->update($validatedData);
+
+        return redirect()->route('games.index')->with('status', 'Game updated successfully.');
     }
 
     public function steamImport()
