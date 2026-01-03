@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use Illuminate\Http\Request;
 
+use App\Services\SteamLibraryService;
+
 
 class GamesController extends Controller
 {
+    protected $steamService;
+
+    public function __construct(SteamLibraryService $steamService)
+    {
+        $this->steamService = $steamService;
+    }
+
     public function index()
     {
         $games = Game::all();
@@ -61,20 +70,29 @@ class GamesController extends Controller
         return redirect()->route('games.index')->with('status', 'Game updated successfully.');
     }
 
-    public function steamImport()
+    public function steamImport(Request $request)
     {
-        $key = $_ENV['STEAM_API_KEY'];
+        $request->validate([
+            'steam_user_id' => 'required',
+        ]);
+        $steamId = $request->input('steam_user_id');
+        $ownedGames = $this->steamService->fetchOwnedGames($steamId);
 
-        $api = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$key}&steamid=76561198864447681&format=json&include_appinfo=true&include_played_free_games=true";
-        $json = file_get_contents($api);
-        $data = json_decode($json, true);
-        $games = $data['response']['games'];
-        foreach ($games as $game) {
-            echo 'Game Name: ' . $game['name'] . '<br>';
-            echo 'App ID: ' . $game['appid'] . '<br>';
-            echo 'Playtime (minutes): ' . $game['playtime_forever'] . '<br>';
-            echo '<hr>';
+        foreach ($ownedGames as $steamGame) {
+            $game_logo_url = $this->steamService->getGameLogoUrl($steamGame['appid'], $steamGame['img_icon_url']);
+
+            Game::updateOrCreate(
+                ['steam_appid' => $steamGame['appid']],
+                [
+                    'game_name' => $steamGame['name'],
+                    'game_description' => 'Imported from Steam',
+                    'cover_image_path' => $game_logo_url,
+                ]
+            );
         }
-        return response()->json(['message' => 'Games imported from Steam successfully']);
+        
+        error_log('Imported ' . count($ownedGames) . ' games from Steam for user ' . $steamId);
+
+        return redirect()->route('games.index')->with('status', 'Games imported from Steam successfully.');
     }
 }

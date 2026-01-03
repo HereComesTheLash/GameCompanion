@@ -10,6 +10,7 @@ class Game extends Model
     use HasFactory;
 
     protected $fillable = [
+        'steam_appid',
         'game_name',
         'game_description',
         'cover_image_path',

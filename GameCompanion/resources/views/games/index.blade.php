@@ -29,11 +29,12 @@
         <div class="catalogue-wrapper p-3 bg-light rounded">
             <div class="row g-4">
                 @foreach ($games as $game)
-                    <div class="col-12 col-md-6 col-lg-4 d-flex">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
                         <div class="card w-100 h-100 shadow-sm">
-                            <img class="card-img-top"
-                                src="{{ $game->cover_image_path ? asset('storage/' . $game->cover_image_path) : '' }}"
-                                alt="{{ $game->game_name }}" style="height: 220px; object-fit: cover;">
+                            <img class="card-img-top rounded-top"
+                                src="{{ str_starts_with($game->cover_image_path, 'http') ? $game->cover_image_path : asset('storage/' . $game->cover_image_path) }}"
+                                alt="{{ $game->game_name }} cover"
+                                style="width: 100%; aspect-ratio: 2 / 3; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="mb-2">{{ $game->game_name }}</h5>
                                 <p class="card-text text-muted mb-0">
