@@ -27,21 +27,23 @@
 
     @if ($games->count())
         <div class="catalogue-wrapper p-3 bg-light rounded">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="row g-4">
                 @foreach ($games as $game)
-                    <div class="col d-flex justify-content-center">
-                        <div class="card w-50">
-                            <img class="card-img-top" src="{{ asset('storage/' . ($game->cover_image_path ?? '')) }}"
-                                alt="{{ $game->game_name }}">
-                            <div class="card-body">
-                                <h5>{{ $game->game_name }}</h5>
-                                <p class="card-text text-muted">
-                                    {{ $game->game_description, 140 }}
+                    <div class="col-12 col-md-6 col-lg-4 d-flex">
+                        <div class="card w-100 h-100 shadow-sm">
+                            <img class="card-img-top"
+                                src="{{ $game->cover_image_path ? asset('storage/' . $game->cover_image_path) : '' }}"
+                                alt="{{ $game->game_name }}" style="height: 220px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="mb-2">{{ $game->game_name }}</h5>
+                                <p class="card-text text-muted mb-0">
+                                    {{ $game->game_description }}
                                 </p>
                             </div>
-                            <div class="card-footer">
-                                <a href="" class="btn btn-primary">View Note</a>
-                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-primary">Edit Details</a>
+                            <div class="card-footer d-flex gap-2 flex-wrap">
+                                <a href="" class="btn btn-outline-primary btn-sm">View Note</a>
+                                <a href="{{ route('games.edit', $game->id) }}" class="btn btn-primary btn-sm">Edit
+                                    Details</a>
                             </div>
                         </div>
                     </div>
