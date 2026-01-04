@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GamesController;
+use App\Http\Controllers\NotesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,9 @@ Route::post('/games/store', [GamesController::class, 'store'])->name('games.stor
 Route::put('/games/{id}', [GamesController::class, 'update'])->name('games.update');
 
 Route::post('/games/steam/import', [GamesController::class, 'steamImport'])->name('games.steam.import');
+
+Route::delete('/games/{id}', [GamesController::class, 'destroy'])->name('games.destroy');
+
+
+
+Route::get('/games/{id}/notes', [NotesController::class, 'index'])->name('games.notes.index');

@@ -70,6 +70,14 @@ class GamesController extends Controller
         return redirect()->route('games.index')->with('status', 'Game updated successfully.');
     }
 
+    public function destroy($id)
+    {
+        $game = Game::findOrFail($id);
+        $game->delete();
+
+        return redirect()->route('games.index')->with('status', 'Game deleted successfully.');
+    }
+
     public function steamImport(Request $request)
     {
         $request->validate([
