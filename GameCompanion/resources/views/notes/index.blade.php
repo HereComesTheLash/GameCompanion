@@ -1,9 +1,5 @@
 @extends('layouts.main')
 
-@php
-    use Illuminate\Support\Str;
-@endphp
-
 @section('content')
     <main class="py-5">
         <div class="container">
@@ -72,9 +68,7 @@
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
                                         <td>
-                                            <a href="#" class="text-decoration-none">
-                                                {{ Str::limit($note->note_content, 100) }}
-                                            </a>
+                                            {{ $note->note_title }}
                                         </td>
                                         <td>{{ $note->updated_at?->format('M d, Y • H:i') ?? '—' }}</td>
                                         <td class="text-end">
@@ -98,7 +92,7 @@
                                     <tr>
                                         <td colspan="4" class="text-center py-5 text-muted">
                                             <i class="fa fa-sticky-note fa-2x mb-3 d-block"></i>
-                                            No notes recorded yet. Start by adding a new note above.
+                                            No games yet. <a href="{{ route('notes.add', ['id' => $game->id]) }}">Add one.</a>
                                         </td>
                                     </tr>
                                 @endforelse

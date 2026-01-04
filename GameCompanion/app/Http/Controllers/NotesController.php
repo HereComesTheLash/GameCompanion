@@ -14,4 +14,10 @@ class NotesController extends Controller
         $notes = Note::where('game_id', $gameId)->get();
         return view('notes.index', compact('game', 'notes'));
     }
+
+    public function add($gameId)
+    {
+        $game = Game::findOrFail($gameId);
+        return view('notes.add', compact('game'));
+    }
 }
