@@ -1,8 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
-    <div id="display"></div>
-    <textarea class="form-control" id="input" onkeyup="handleInputChange()"></textarea>
+    <main>
+        <textarea class="form-control" id="input" onkeyup="handleInputChange()" rows="12"></textarea>
+        <div class="" id="display"></div>
+    </main>
+
     <script>
         var inputArea = document.getElementById('input');
         var displayArea = document.getElementById('display');
@@ -20,5 +23,7 @@
         const handleInputChange = debounce(() => {
             displayArea.innerHTML = marked.parse(inputArea.value);
         }, 500);
+
+        displayArea.innerHTML = marked.parse(inputArea.value);
     </script>
 @endsection
