@@ -36,3 +36,5 @@ Route::delete('/games/{id}', [GamesController::class, 'destroy'])->name('games.d
 Route::get('/games/{id}/notes', [NotesController::class, 'index'])->name('games.notes.index');
 
 Route::get('/games/{id}/notes/add', [NotesController::class, 'add'])->name('notes.add');
+
+Route::post('/notes/store', [NotesController::class, 'store'])->name('notes.store');

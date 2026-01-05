@@ -36,8 +36,8 @@ class GamesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'game_name' => 'required|max:255',
-            'game_description' => 'required',
+            'game_name' => 'required|max:20',
+            'game_description' => 'required|max:255',
         ]);
 
         $image = $request->file('cover_image_file');
@@ -53,8 +53,8 @@ class GamesController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'game_name' => 'required|max:255',
-            'game_description' => 'required',
+            'game_name' => 'required|max:20',
+            'game_description' => 'required|max:255',
         ]);
 
         $game = Game::findOrFail($id);

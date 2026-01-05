@@ -18,6 +18,7 @@ class NotesController extends Controller
     public function add($gameId)
     {
         $game = Game::findOrFail($gameId);
+
         return view('notes.add', compact('game'));
     }
 }

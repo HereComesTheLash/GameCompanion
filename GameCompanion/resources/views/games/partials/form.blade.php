@@ -1,9 +1,6 @@
 <form method="POST" action="{{ $formAction }}" enctype="multipart/form-data">
     @csrf
-    @php($normalizedMethod = strtoupper($formMethod ?? 'POST'))
-    @if ($normalizedMethod !== 'POST')
-        @method($normalizedMethod)
-    @endif
+    @method($formMethod ?? 'POST')
 
     <div class="form-group row">
         <label for="game_name" class="col-md-3 col-form-label">Game Name</label>
