@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-{{$game}}
+    {{ $game }}
     <main class="container-fluid py-2">
         <form method="post" action="{{ route('notes.store', ['id' => $game]) }}" enctype="multipart/form-data">
             @csrf
@@ -11,8 +11,7 @@
             <div class="row g-3 align-items-start">
                 <div class="col-12 col-lg-10 col-xl-11">
                     <div class="d-flex flex-column gap-3">
-                        <textarea class="form-control flex-grow-0 min-vh-50 shadow" name="note_content" id="note-content"
-                            onkeyup="handleInputChange()"></textarea>
+                        <textarea class="form-control flex-grow-0 min-vh-50 shadow" name="note_content" id="note-content"></textarea>
                         <div id="display" class="border rounded p-3 bg-light overflow-auto"></div>
                     </div>
                 </div>
@@ -21,8 +20,7 @@
                         <div class="p-2 border rounded bg-light">
                             <div class="d-flex flex-column gap-2 mb-2">
                                 <button type="submit" class="btn btn-success">Save</button>
-                                <a href="{{ route('games.notes.index', ['id' => $game]) }}"
-                                    class="btn btn-secondary">
+                                <a href="{{ route('games.notes.index', ['id' => $game]) }}" class="btn btn-secondary">
                                     Go Back
                                 </a>
                                 <label for="image-upload" class="btn btn-sm btn-outline-secondary w-100">Upload
@@ -44,37 +42,47 @@
         </form>
     </main>
 
-    <script>
-        var inputArea = document.getElementById('note-content');
-        var displayArea = document.getElementById('display');
+    <script type="module">
+        import {
+            marked
+        } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-        var testing = `# HTML ALSO WORKS; CLEAN INPUT !
--> https://github.com/cure53/DOMPurify
+        const IMAGE_BASE = '{{ asset('storage/cover_images/') }}/';
 
-<img title="a title" alt="Alt text" src="https://cataas.com/cat">
+        const renderer = {
+            image({
+                href,
+                text,
+                title
+            }) {
+                if (!href.startsWith('http') && !href.startsWith('/')) {
+                    href = IMAGE_BASE + href;
+                }
 
+                return `<img src="${href}" alt="${text}" title="${title ?? ''}">`;
+            }
+        };
 
-![Alt text](https://cataas.com/cat "a title")
-meow
-![Alt text](https://cataas.com/cat "a title")
-`;
+        marked.use({
+            renderer
+        });
 
-        inputArea.value = testing;
+        const inputArea = document.getElementById('note-content');
+        const displayArea = document.getElementById('display');
 
-        const debounce = (callback, wait) => {
-            let timeoutId = null;
-            return (...args) => {
-                window.clearTimeout(timeoutId);
-                timeoutId = window.setTimeout(() => {
-                    callback(...args);
-                }, wait);
+        const debounce = (cb, wait) => {
+            let t;
+            return () => {
+                clearTimeout(t);
+                t = setTimeout(cb, wait);
             };
-        }
+        };
 
         const handleInputChange = debounce(() => {
             displayArea.innerHTML = marked.parse(inputArea.value);
-        }, 500);
+        }, 300);
 
+        inputArea.addEventListener('keyup', handleInputChange);
         displayArea.innerHTML = marked.parse(inputArea.value);
     </script>
 @endsection

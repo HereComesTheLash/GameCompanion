@@ -32,10 +32,13 @@
                                 </div>
                                 <div class="col-12 col-md-3">
                                     <select id="sort" name="sort" class="form-select">
-                                        <option value="" {{ !request()->filled('sort') ? 'selected' : '' }}>Default</option>
-                                        <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name (A–Z)</option>
-                                        <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>Name (Z–A)</option>
-                                        <option value="recent" {{ request('sort') === 'recent' ? 'selected' : '' }}>Recently Added</option>
+                                        <option value="" {{ !request()->filled('sort') ? 'selected' : '' }}>Default
+                                        </option>
+                                        <option value="name_asc" {{ request('sort') === 'name_asc' ? 'selected' : '' }}>Name
+                                            (A–Z)</option>
+                                        <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>
+                                            Name (Z–A)</option>
+                                        <option value="recent" {{ request('sort') === 'recent' ? 'selected' : '' }}>Recently Updated</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-3 text-md-end">
@@ -68,9 +71,12 @@
                                                         </p>
                                                     </div>
                                                     <div class="card-footer d-flex gap-2 flex-wrap">
-                                                        <a href="{{ route('games.notes.index', $game->id) }}" class="btn btn-outline-primary btn-sm">View Notes</a>
-                                                        <a href="{{ route('games.edit', $game->id) }}" class="btn btn-primary btn-sm">Edit Details</a>
-                                                        <form action="{{ route('games.destroy', $game->id) }}" method="POST" class="d-inline">
+                                                        <a href="{{ route('games.notes.index', $game->id) }}"
+                                                            class="btn btn-outline-primary btn-sm">View Notes</a>
+                                                        <a href="{{ route('games.edit', $game->id) }}"
+                                                            class="btn btn-primary btn-sm">Edit Details</a>
+                                                        <form action="{{ route('games.destroy', $game->id) }}"
+                                                            method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger btn-sm"

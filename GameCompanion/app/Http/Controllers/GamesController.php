@@ -16,9 +16,24 @@ class GamesController extends Controller
         $this->steamService = $steamService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::all();
+        $search = $request->input('search');
+        if ($search) {
+            $games = Game::where('game_name', 'like', '%' . $search . '%')->get();
+            return view('games.index', compact('games', 'search'));
+        }
+        $sort = $request->input('sort');
+        if ($sort === 'name_asc') {
+            $games = Game::orderBy('game_name', 'asc')->get();
+        } elseif ($sort === 'name_desc') {
+            $games = Game::orderBy('game_name', 'desc')->get();
+        } elseif ($sort === 'recent'){
+            $games = Game::orderby('updated_at', 'desc')->get();
+        }
+        else {
+            $games = Game::all();
+        }
         return view('games.index', compact('games'));
     }
 
@@ -99,8 +114,6 @@ class GamesController extends Controller
             );
         }
         
-        error_log('Imported ' . count($ownedGames) . ' games from Steam for user ' . $steamId);
-
         return redirect()->route('games.index')->with('status', 'Games imported from Steam successfully.');
     }
 }

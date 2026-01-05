@@ -23,8 +23,7 @@ class SteamLibraryService
             'include_played_free_games' => true,
             'format' => 'json',
         ]);
-        // print result url
-        error_log('Steam API URL: ' . $response->effectiveUri());
+        
         if ($response->successful()) {
             return $response->json()['response']['games'] ?? [];
         }
