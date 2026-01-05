@@ -15,7 +15,7 @@ use App\Http\Controllers\NotesController;
 |
 */
 
-Route::get('/', function() { return View('index'); });
+Route::get('/', function() { return redirect()->route('games.index'); });
 
 Route::get('/games', [GamesController::class, 'index'])->name('games.index');
 

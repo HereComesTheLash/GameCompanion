@@ -39,12 +39,6 @@
                                         <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>
                                             Oldest first
                                         </option>
-                                        <option value="short" {{ request('sort') === 'short' ? 'selected' : '' }}>
-                                            Shortest first
-                                        </option>
-                                        <option value="long" {{ request('sort') === 'long' ? 'selected' : '' }}>
-                                            Longest first
-                                        </option>
                                     </select>
                                 </div>
 
