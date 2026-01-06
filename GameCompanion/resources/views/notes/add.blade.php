@@ -21,7 +21,7 @@
                             @endif
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form method="POST" action="{{ route('notes.store') }}" enctype="multipart/form-data">
+                                    <form method="POST" action="{{ route('games.notes.store', $game->id) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method($formMethod ?? 'POST')
                                         <input type="hidden" name="game_id" value="{{ $game->id }}">

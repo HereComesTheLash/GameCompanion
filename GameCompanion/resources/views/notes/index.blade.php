@@ -12,7 +12,7 @@
                                     <h2 class="mb-0">{{ $game->game_name }}</h2>
                                 </div>
                                 <div class="ms-auto">
-                                    <a href="{{ route('notes.add', ['id' => $game->id]) }}" class="btn btn-primary">
+                                    <a href="{{ route('games.notes.add', $game->id) }}" class="btn btn-primary">
                                         <i class="fa fa-plus-circle me-2"></i>New Note
                                     </a>
                                 </div>
@@ -72,7 +72,7 @@
                                             <a href="#" class="btn btn-sm btn-outline-secondary" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <form action="#" method="POST" class="d-inline">
+                                            <form action="{{ route('games.notes.destroy', ['gameId' => $game->id, 'noteId' => $note->id]) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-outline-danger"
@@ -86,7 +86,7 @@
                                     <tr>
                                         <td colspan="4" class="text-center py-5 text-muted">
                                             <i class="fa fa-sticky-note fa-2x mb-3 d-block"></i>
-                                            No notes yet. <a href="{{ route('notes.add', ['id' => $game->id]) }}">Add one.</a>
+                                            No notes yet. <a href="{{ route('games.notes.add', $game->id) }}">Add one.</a>
                                         </td>
                                     </tr>
                                 @endforelse

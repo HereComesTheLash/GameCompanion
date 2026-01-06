@@ -102,7 +102,7 @@ class GamesController extends Controller
         $ownedGames = $this->steamService->fetchOwnedGames($steamId);
 
         foreach ($ownedGames as $steamGame) {
-            $game_logo_url = $this->steamService->getGameLogoUrl($steamGame['appid'], $steamGame['img_icon_url']);
+            $game_logo_url = $this->steamService->getGameLogoUrl($steamGame['appid']);
 
             Game::updateOrCreate(
                 ['steam_appid' => $steamGame['appid']],
