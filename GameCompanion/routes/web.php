@@ -40,6 +40,10 @@ Route::get('/games/{gameId}/notes', [NotesController::class, 'index'])->name('ga
 
 Route::get('/games/{gameId}/notes/add', [NotesController::class, 'add'])->name('games.notes.add');
 
+Route::get('/games/{gameId}/notes/{noteId}/edit', [NotesController::class, 'edit'])->name('games.notes.edit');
+
+Route::put('/games/{gameId}/notes/{noteId}', [NotesController::class, 'update'])->name('games.notes.update');
+
 Route::post('/games/{gameId}/notes', [NotesController::class, 'store'])->name('games.notes.store');
 
 Route::delete('/games/{gameId}/notes/{noteId}', [NotesController::class, 'destroy'])->name('games.notes.destroy');

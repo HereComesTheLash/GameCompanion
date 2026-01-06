@@ -32,14 +32,32 @@ class NotesController extends Controller
         $note = new Note();
         $note->game_id = $game->id;
         $note->note_title = $validatedData['note_title'];
-        $note->note_content = '# I <3 cats';
+        $note->note_content = '# New Note';
         $note->save();  
         return redirect()->route('games.notes.index', $game->id);      
     }
 
-    public function destroy($noteId)
+    public function edit($gameId, $noteId)
+    {
+        $game = Game::findOrFail($gameId);
+        $note = Note::findOrFail($noteId);
+        return view('notes.edit', compact('game', 'note'));
+    }
+    public function update(Request $request, $gameId, $noteId)
     {
         $note = Note::findOrFail($noteId);
-        
+        $validatedData = $request->validate([
+            'note_title' => 'required|string|max:255',
+            'note_content' => 'required|string',
+        ]);
+        $note->update($validatedData);
+
+        return redirect()->route('games.notes.index', $gameId);
+    }
+    public function destroy($gameId, $noteId)
+    {
+        $note = Note::findOrFail($noteId);
+        $note->delete();
+        return redirect()->route('games.notes.index', $gameId);
     }
 }

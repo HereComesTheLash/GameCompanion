@@ -33,7 +33,8 @@
 
                                 <div class="col-12 col-md-3">
                                     <select class="form-select" name="sort">
-                                        <option value="recent" {{ request('sort', 'recent') === 'recent' ? 'selected' : '' }}>
+                                        <option value="recent"
+                                            {{ request('sort', 'recent') === 'recent' ? 'selected' : '' }}>
                                             Recent first
                                         </option>
                                         <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>
@@ -69,10 +70,13 @@
                                             <a href="#" class="btn btn-sm btn-outline-info" title="View">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="#" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                            <a href="{{ route('games.notes.edit', ['gameId' => $game->id, 'noteId' => $note->id]) }}"
+                                                class="btn btn-sm btn-outline-secondary" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('games.notes.destroy', ['gameId' => $game->id, 'noteId' => $note->id]) }}" method="POST" class="d-inline">
+                                            <form
+                                                action="{{ route('games.notes.destroy', ['gameId' => $game->id, 'noteId' => $note->id]) }}"
+                                                method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-outline-danger"
