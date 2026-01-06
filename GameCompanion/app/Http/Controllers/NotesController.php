@@ -21,4 +21,19 @@ class NotesController extends Controller
 
         return view('notes.add', compact('game'));
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'game_id' => 'required|exists:games,id',
+            'note_title' => 'required|string|max:255',
+        ]);
+
+        $note = new Note();
+        $note->game_id = $validatedData['game_id'];
+        $note->note_title = $validatedData['note_title'];
+        $note->note_content = '# I <3 cats';
+        $note->save();  
+        return redirect()->route('notes.index', ['gameId' => $validatedData['game_id']]);      
+    }
 }

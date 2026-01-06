@@ -52,7 +52,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col" style="width: 60px;">#</th>
-                                    <th scope="col">Snippet</th>
+                                    <th scope="col">Note Title</th>
                                     <th scope="col" style="width: 220px;">Last Updated</th>
                                     <th scope="col" class="text-end" style="width: 200px;">Actions</th>
                                 </tr>
