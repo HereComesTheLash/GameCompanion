@@ -41,7 +41,8 @@ class NotesController extends Controller
     {
         $game = Game::findOrFail($gameId);
         $note = Note::findOrFail($noteId);
-        return view('notes.edit', compact('game', 'note'));
+        $images = $note->images;
+        return view('notes.edit', compact('game', 'note', 'images'));
     }
     public function update(Request $request, $gameId, $noteId)
     {

@@ -1,45 +1,67 @@
 @extends('layouts.main')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <main class="container-fluid py-2">
-        <form method="POST" action="{{ route('games.notes.update', ['gameId' => $game->id, 'noteId' => $note->id]) }}" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <input type="hidden" id="game-id" value="{{ $game }}">
-            <input type="text" name="note_title" id="note-title" class="form-control mb-3 text-center fs-4"
-                placeholder="Note Title" value="{{ $note->note_title }}">
-            <div class="row g-3 align-items-start">
-                <div class="col-12 col-lg-10 col-xl-11">
-                    <div class="d-flex flex-column gap-3">
-                        <textarea class="form-control flex-grow-0 min-vh-50 shadow" name="note_content" id="note-content">{{ $note->note_content }}</textarea>
-                        <div id="display" class="border rounded p-3 bg-light overflow-auto"></div>
+        <div class="mb-3 p-3 border rounded bg-light">
+            <form method="POST" action="{{ route('games.notes.images.store', [$game->id, $note->id]) }}"
+                enctype="multipart/form-data" class="d-flex gap-2 mb-2">
+                @csrf
+                <input type="file" name="image" class="form-control form-control-sm w-auto">
+                <button class="btn btn-sm btn-outline-secondary">Upload</button>
+            </form>
+
+            <div class="d-flex flex-column gap-2">
+                @forelse ($images as $image)
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary user-select-all">
+                            {{ $image->image_name }}
+                        </button>
+
+                        <form method="POST"
+                            action="{{ route('games.notes.images.destroy', [$game->id, $note->id, $image->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this image?')">
+                                Delete
+                            </button>
+                        </form>
                     </div>
-                </div>
-                <div class="col-12 col-lg-2 col-xl-1">
-                    <div class="d-flex flex-column gap-3">
-                        <div class="p-2 border rounded bg-light">
-                            <div class="d-flex flex-column gap-2 mb-2">
-                                <button type="submit" class="btn btn-success">Save</button>
-                                <a href="{{ route('games.notes.index', $game->id) }}" class="btn btn-secondary">
-                                    Go Back
-                                </a>
-                                <label for="image-upload" class="btn btn-sm btn-outline-secondary w-100">Upload
-                                    Image</label>
-                                <input type="file" id="image-upload" name="image_upload" class="form-control d-none">
-                            </div>
-                        </div>
-                        {{-- <div class="p-2 border rounded bg-light overflow-auto">
-                            <div class="d-flex flex-column gap-2">
-                                <button class="btn btn-sm btn-outline-secondary w-100 user-select-all">
-                                    TODO: IMAGE NAME GOES HERE
-                                    <button class="btn btn-sm btn-danger h-20px">Delete</button>
-                                </button>
-                            </div>
-                        </div> --}}
-                    </div>
-                </div>
+                @empty
+                    <div class="text-muted small">No images uploaded yet.</div>
+                @endforelse
             </div>
-        </form>
+
+            <form method="POST" action="{{ route('games.notes.update', [$game->id, $note->id]) }}">
+                @csrf
+                @method('PUT')
+
+                <input type="text" name="note_title" class="form-control mb-3 text-center fs-4"
+                    value="{{ $note->note_title }}">
+
+                <div class="row g-3">
+                    <div class="col-lg-10">
+                        <textarea class="form-control min-vh-50 shadow" name="note_content" id="note-content">{{ $note->note_content }}</textarea>
+
+                        <div id="display" class="border rounded p-3 bg-light mt-3 overflow-auto"></div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="d-flex flex-column gap-2">
+                            <button class="btn btn-success">Save</button>
+                            <a href="{{ route('games.notes.index', $game->id) }}" class="btn btn-secondary">Go Back</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
     </main>
 
     <script type="module">
@@ -47,7 +69,7 @@
             marked
         } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-        const IMAGE_BASE = '{{ asset('storage/cover_images/') }}/';
+        const IMAGE_BASE = '{{ asset('storage/note_images/') }}/';
 
         const renderer = {
             image({
