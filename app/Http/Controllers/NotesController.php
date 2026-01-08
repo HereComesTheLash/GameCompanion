@@ -2,16 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\Note;
+use Illuminate\Http\Request;
 
 class NotesController extends Controller
 {
-    public function index($gameId)
+    public function index(Request $request, $gameId)
     {
+        $search = $request->input('search');
         $game = Game::findOrFail($gameId);
-        $notes = Note::where('game_id', $gameId)->get();
+        if ($search) {
+            $notes = Note::where('game_id', $gameId)
+                ->where('note_title', 'like', '%'.$search.'%')
+                ->get();
+
+            return view('notes.index', compact('game', 'notes', 'search'));
+        }
+        $sort = $request->input('sort');
+        if ($sort === 'recent') {
+            $notes = Note::where('game_id', $gameId)
+                ->orderby('updated_at', 'desc')
+                ->get();
+        } elseif ($sort === 'oldest') {
+            $notes = Note::where('game_id', $gameId)
+                ->orderby('updated_at', 'asc')
+                ->get();
+        } else {
+            $notes = Note::where('game_id', $gameId)->get();
+        }
+
         return view('notes.index', compact('game', 'notes'));
     }
 
@@ -29,12 +49,13 @@ class NotesController extends Controller
             'note_title' => 'required|string|max:255',
         ]);
 
-        $note = new Note();
+        $note = new Note;
         $note->game_id = $game->id;
         $note->note_title = $validatedData['note_title'];
         $note->note_content = '# New Note';
-        $note->save();  
-        return redirect()->route('games.notes.index', $game->id);      
+        $note->save();
+
+        return redirect()->route('games.notes.index', $game->id);
     }
 
     public function edit($gameId, $noteId)
@@ -42,8 +63,10 @@ class NotesController extends Controller
         $game = Game::findOrFail($gameId);
         $note = Note::findOrFail($noteId);
         $images = $note->images;
+
         return view('notes.edit', compact('game', 'note', 'images'));
     }
+
     public function update(Request $request, $gameId, $noteId)
     {
         $note = Note::findOrFail($noteId);
@@ -55,10 +78,12 @@ class NotesController extends Controller
 
         return redirect()->route('games.notes.index', $gameId);
     }
+
     public function destroy($gameId, $noteId)
     {
         $note = Note::findOrFail($noteId);
         $note->delete();
+
         return redirect()->route('games.notes.index', $gameId);
     }
 }

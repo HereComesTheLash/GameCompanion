@@ -19,7 +19,7 @@
                 <button class="btn btn-sm btn-outline-secondary">Upload</button>
             </form>
 
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-row flex-wrap gap-2 align-items-center">
                 @forelse ($images as $image)
                     <div class="d-flex align-items-center gap-2">
                         <button type="button" class="btn btn-sm btn-outline-secondary user-select-all">
@@ -27,7 +27,7 @@
                         </button>
 
                         <form method="POST"
-                            action="{{ route('games.notes.images.destroy', [$game->id, $note->id, $image->id]) }}">
+                            action="{{ route('games.notes.images.destroy', [$game->id, $note->id, $image->id]) }}" class="m-0">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this image?')">

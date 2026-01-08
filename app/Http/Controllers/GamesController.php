@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Game;
-use Illuminate\Http\Request;
-
 use App\Services\SteamLibraryService;
-
+use Illuminate\Http\Request;
 
 class GamesController extends Controller
 {
@@ -20,7 +19,8 @@ class GamesController extends Controller
     {
         $search = $request->input('search');
         if ($search) {
-            $games = Game::where('game_name', 'like', '%' . $search . '%')->get();
+            $games = Game::where('game_name', 'like', '%'.$search.'%')->get();
+
             return view('games.index', compact('games', 'search'));
         }
         $sort = $request->input('sort');
@@ -28,12 +28,12 @@ class GamesController extends Controller
             $games = Game::orderBy('game_name', 'asc')->get();
         } elseif ($sort === 'name_desc') {
             $games = Game::orderBy('game_name', 'desc')->get();
-        } elseif ($sort === 'recent'){
+        } elseif ($sort === 'recent') {
             $games = Game::orderby('updated_at', 'desc')->get();
-        }
-        else {
+        } else {
             $games = Game::all();
         }
+
         return view('games.index', compact('games'));
     }
 
@@ -45,6 +45,7 @@ class GamesController extends Controller
     public function edit($id)
     {
         $game = Game::findOrFail($id);
+
         return view('games.edit', compact('game'));
     }
 
@@ -113,7 +114,7 @@ class GamesController extends Controller
                 ]
             );
         }
-        
+
         return redirect()->route('games.index')->with('status', 'Games imported from Steam successfully.');
     }
 }
