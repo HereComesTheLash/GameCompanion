@@ -11,7 +11,7 @@ class NotesController extends Controller
     public function index(Request $request, $gameId)
     {
         $search = $request->input('search');
-        $game = Game::findOrFail($gameId);
+        $game = Game::find($gameId);
         if ($search) {
             $notes = Note::where('game_id', $gameId)
                 ->where('note_title', 'like', '%'.$search.'%')
@@ -35,16 +35,16 @@ class NotesController extends Controller
         return view('notes.index', compact('game', 'notes'));
     }
 
-    public function add($gameId)
+    public function create($gameId)
     {
-        $game = Game::findOrFail($gameId);
+        $game = Game::find($gameId);
 
-        return view('notes.add', compact('game'));
+        return view('notes.create', compact('game'));
     }
 
     public function store(Request $request, $gameId)
     {
-        $game = Game::findOrFail($gameId);
+        $game = Game::find($gameId);
         $validatedData = $request->validate([
             'note_title' => 'required|string|max:255',
         ]);
@@ -60,8 +60,8 @@ class NotesController extends Controller
 
     public function edit($gameId, $noteId)
     {
-        $game = Game::findOrFail($gameId);
-        $note = Note::findOrFail($noteId);
+        $game = Game::find($gameId);
+        $note = Note::find($noteId);
         $images = $note->images;
 
         return view('notes.edit', compact('game', 'note', 'images'));
@@ -69,7 +69,7 @@ class NotesController extends Controller
 
     public function update(Request $request, $gameId, $noteId)
     {
-        $note = Note::findOrFail($noteId);
+        $note = Note::find($noteId);
         $validatedData = $request->validate([
             'note_title' => 'required|string|max:255',
             'note_content' => 'required|string',
@@ -81,7 +81,7 @@ class NotesController extends Controller
 
     public function destroy($gameId, $noteId)
     {
-        $note = Note::findOrFail($noteId);
+        $note = Note::find($noteId);
         $note->delete();
 
         return redirect()->route('games.notes.index', $gameId);

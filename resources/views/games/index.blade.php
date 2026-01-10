@@ -12,7 +12,7 @@
                                     <h2 class="mb-0">Games Catalogue</h2>
                                 </div>
                                 <div class="ms-auto">
-                                    <a href="{{ route('games.add') }}" class="btn btn-primary">
+                                    <a href="{{ route('games.create') }}" class="btn btn-primary">
                                         <i class="fa fa-plus-circle me-2"></i>Add Game
                                     </a>
                                 </div>
@@ -91,7 +91,7 @@
                             @else
                                 <div class="text-center py-5 text-muted">
                                     <i class="fa fa-gamepad fa-2x mb-3 d-block"></i>
-                                    No games yet. <a href="{{ route('games.add') }}">Add one.</a>
+                                    No games yet. <a href="{{ route('games.create') }}">Add one.</a>
                                 </div>
                             @endif
                         </div>

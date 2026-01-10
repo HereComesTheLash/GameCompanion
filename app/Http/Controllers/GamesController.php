@@ -37,14 +37,14 @@ class GamesController extends Controller
         return view('games.index', compact('games'));
     }
 
-    public function add()
+    public function create()
     {
-        return view('games.add');
+        return view('games.create');
     }
 
     public function edit($id)
     {
-        $game = Game::findOrFail($id);
+        $game = Game::find($id);
 
         return view('games.edit', compact('game'));
     }
@@ -73,7 +73,7 @@ class GamesController extends Controller
             'game_description' => 'required|max:255',
         ]);
 
-        $game = Game::findOrFail($id);
+        $game = Game::find($id);
 
         $image = $request->file('cover_image_file');
         if ($image) {
@@ -88,7 +88,7 @@ class GamesController extends Controller
 
     public function destroy($id)
     {
-        $game = Game::findOrFail($id);
+        $game = Game::find($id);
         $game->delete();
 
         return redirect()->route('games.index')->with('status', 'Game deleted successfully.');
