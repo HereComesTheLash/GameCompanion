@@ -67,12 +67,9 @@
                                         </td>
                                         <td>{{ $note->updated_at?->format('M d, Y • H:i') ?? '—' }}</td>
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-sm btn-outline-info" title="View">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
                                             <a href="{{ route('games.notes.edit', ['gameId' => $game->id, 'noteId' => $note->id]) }}"
                                                 class="btn btn-sm btn-outline-secondary" title="Edit">
-                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-eye"></i>
                                             </a>
                                             <form
                                                 action="{{ route('games.notes.destroy', ['gameId' => $game->id, 'noteId' => $note->id]) }}"
