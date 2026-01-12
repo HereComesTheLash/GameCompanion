@@ -35,6 +35,7 @@ class ImagesController extends Controller
     {
         $image = Image::where('note_id', $noteId)->find($imageId);
         $image->delete();
+        Storage::disk('public')->delete('note_images/' . $image->image_name);
         return redirect()->route('games.notes.edit', [$gameId, $noteId]);
     }
 }

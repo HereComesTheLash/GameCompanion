@@ -90,7 +90,7 @@ class GamesController extends Controller
     {
         $game = Game::find($id);
         $game->delete();
-
+        Storage::disk('public')->delete($game->cover_image_path);
         return redirect()->route('games.index')->with('status', 'Game deleted successfully.');
     }
 
