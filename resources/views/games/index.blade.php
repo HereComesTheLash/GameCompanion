@@ -38,7 +38,10 @@
                                             (A–Z)</option>
                                         <option value="name_desc" {{ request('sort') === 'name_desc' ? 'selected' : '' }}>
                                             Name (Z–A)</option>
-                                        <option value="recent" {{ request('sort') === 'recent' ? 'selected' : '' }}>Recently Updated</option>
+                                        <option value="recent" {{ request('sort') === 'recent' ? 'selected' : '' }}>Game Recently
+                                            Updated</option>
+                                        <option value="recent_note_change" {{ request('sort') === 'recent_note_change' ? 'selected' : '' }}>Note Recently
+                                            Updated</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-3 text-md-end">

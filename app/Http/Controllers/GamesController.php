@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Note;
 use App\Services\SteamLibraryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GamesController extends Controller
 {
@@ -30,10 +32,12 @@ class GamesController extends Controller
             $games = Game::orderBy('game_name', 'desc')->get();
         } elseif ($sort === 'recent') {
             $games = Game::orderby('updated_at', 'desc')->get();
+        } elseif ($sort === 'recent_note_change') {
+            $recent_notes = Note::orderBy('updated_at')->pluck('game_id');
+            $games = Game::find($recent_notes);
         } else {
             $games = Game::all();
         }
-
         return view('games.index', compact('games'));
     }
 
