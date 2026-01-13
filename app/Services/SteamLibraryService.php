@@ -30,6 +30,11 @@ class SteamLibraryService
 
         return [];
     }
+
+    // http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8E15CF96F188A2BACFDA8FEC2BAD9BCA&steamids=76561198864447681
+    public function isUserIdValid($steamId) {
+
+    }
     public function getGameLogoUrl($steamAppId)
     {
         // https://steamcdn-a.akamaihd.net/steam/apps/2357570/library_600x900_2x.jpg
