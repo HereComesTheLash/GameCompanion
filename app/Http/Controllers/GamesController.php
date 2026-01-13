@@ -26,15 +26,15 @@ class GamesController extends Controller
             return view('games.index', compact('games', 'search'));
         }
         $sort = $request->input('sort');
-        if ($sort === 'name_asc') {
+        if ($request->boolean('recent_note_change')) {
+            $recent_notes = Note::orderBy('updated_at')->pluck('game_id');
+            $games = Game::find($recent_notes);
+        } elseif ($sort === 'name_asc') {
             $games = Game::orderBy('game_name', 'asc')->get();
         } elseif ($sort === 'name_desc') {
             $games = Game::orderBy('game_name', 'desc')->get();
         } elseif ($sort === 'recent') {
             $games = Game::orderby('updated_at', 'desc')->get();
-        } elseif ($sort === 'recent_note_change') {
-            $recent_notes = Note::orderBy('updated_at')->pluck('game_id');
-            $games = Game::find($recent_notes);
         } else {
             $games = Game::all();
         }

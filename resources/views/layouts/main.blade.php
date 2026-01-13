@@ -16,8 +16,7 @@
 </head>
 
 <body>
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark gc-navbar sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand text-uppercase d-flex flex-column lh-1" href="{{ url('/') }}">
                 <span class="gc-brand">

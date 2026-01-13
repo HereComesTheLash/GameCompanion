@@ -30,7 +30,6 @@ class SteamLibraryService
 
         return [];
     }
-
     public function getGameLogoUrl($steamAppId)
     {
         // https://steamcdn-a.akamaihd.net/steam/apps/2357570/library_600x900_2x.jpg

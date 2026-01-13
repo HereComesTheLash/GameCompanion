@@ -40,9 +40,14 @@
                                             Name (Z–A)</option>
                                         <option value="recent" {{ request('sort') === 'recent' ? 'selected' : '' }}>Game Recently
                                             Updated</option>
-                                        <option value="recent_note_change" {{ request('sort') === 'recent_note_change' ? 'selected' : '' }}>Note Recently
-                                            Updated</option>
                                     </select>
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" id="recent_note_change"
+                                            name="recent_note_change" value="1"
+                                            {{ request()->boolean('recent_note_change') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="recent_note_change">Note Recently Updated</label>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-3 text-md-end">
                                     <button class="btn btn-outline-secondary w-100 w-md-auto" type="submit">Apply</button>
