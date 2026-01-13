@@ -23,7 +23,7 @@ class SteamLibraryService
             'include_played_free_games' => true,
             'format' => 'json',
         ]);
-        
+
         if ($response->successful()) {
             return $response->json()['response']['games'] ?? [];
         }
@@ -32,13 +32,22 @@ class SteamLibraryService
     }
 
     // http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8E15CF96F188A2BACFDA8FEC2BAD9BCA&steamids=76561198864447681
-    public function isUserIdValid($steamId) {
+    public function isUserIdValid($steamId)
+    {
+        $response = Http::get('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/', [
+            'key' => $this->apiKey,
+            'steamids' => $steamId,
+        ]);
+        $players = $response->json()['response']['players'];
 
+        return ! empty($players);
     }
+
     public function getGameLogoUrl($steamAppId)
     {
         // https://steamcdn-a.akamaihd.net/steam/apps/2357570/library_600x900_2x.jpg
         $url = "https://steamcdn-a.akamaihd.net/steam/apps/{$steamAppId}/library_600x900_2x.jpg";
+
         return $url;
     }
 }
