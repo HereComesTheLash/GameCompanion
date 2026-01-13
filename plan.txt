@@ -12,7 +12,7 @@ https://developer.valvesoftware.com/wiki/Steam_Web_API#GetOwnedGames_(v0001)
 https://steamcommunity.com/dev/apikey
 
 
-http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=8E15CF96F188A2BACFDA8FEC2BAD9BCA&steamid=76561198864447681&format=json&include_appinfo=true&include_played_free_games=true
+http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=XXXXXXXX&steamid=76561198864447681&format=json&include_appinfo=true&include_played_free_games=true
 
 
 Each game will have:

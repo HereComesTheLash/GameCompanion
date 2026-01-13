@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Note;
 use App\Services\SteamLibraryService;
+use App\Rules\ValidUserId;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -101,7 +102,7 @@ class GamesController extends Controller
     public function steamImport(Request $request)
     {
         $request->validate([
-            'steam_user_id' => 'required',
+            'steam_user_id' => ['required', new ValidUserId()],
         ]);
         $steamId = $request->input('steam_user_id');
         $ownedGames = $this->steamService->fetchOwnedGames($steamId);
